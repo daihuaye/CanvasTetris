@@ -1,0 +1,26 @@
+
+#score_container {
+	display: inline;
+}
+
+#canvas {
+	display: none;
+}
+
+#main {
+	width: 660px;
+	height: 400px;
+}
+
+aside {
+	display: block;
+	float: right;
+	height: 400px;
+	width: 200px;
+}
+
+#detail {
+	height: 400px;
+	width: 225px;
+	float: left;
+}

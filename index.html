@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Tetris Game</title>
+<meta name="description" content="A free puzzle tetris game.">
+<meta name="keywords" content="game, games, puzzle, falling blocks, high score, tetris">
+
+<link rel="stylesheet" href="stylesheets/style.css" type="text/css" media="screen"charset="utf-8">
+<script src="javascripts/base.js"></script>
+<script src="javascripts/Board.js"></script>
+<script src="javascripts/Piece.js"></script>
+<script src="javascripts/localStorage.js"></script>
+<script src="javascripts/main.js"></script>
+</head>
+<body>
+	<div id="main">
+		<canvas id="canvas" height="400", width="230"></canvas>
+		<canvas id="visible-canvas" height="400" width="230" style="float:left;" onkeydown="tetris.Keyborad.onKeyDown(event);"></canvas>
+		<aside>
+			<fieldset>
+				<legend>Top 10 best recording:</legend>
+				<ol id="listScores">
+					<li>0</li>
+					<li>0</li>
+					<li>0</li>
+					<li>0</li>
+					<li>0</li>
+					<li>0</li>
+					<li>0</li>
+					<li>0</li>
+					<li>0</li>
+					<li>0</li>
+				</ol>
+			</fieldset>
+			<fieldset id="contact">
+				<legend>Contact:</legend>
+				<div id="creator">
+					Programmed by <a href="http://daihuaprofile.appspot.com/">Daihua Ye</a><br/>
+				</div>
+				<div id="code">
+					Get the code from <a href="https://github.com/Rayomnd/tetrisgame">github</a>
+				</div>
+			</fieldset>
+		</aside>
+		<div id="detail">
+			<fieldset>
+				<legend>Your Scores:</legend>
+				<div id="score_container">
+					Score:
+					<span id="score">0</span>
+				</div>
+				<div id="level_container">
+					Level:
+					<span id="level">0</span>
+				</div>
+				<div id="speed_container">
+					Speed:
+					<span id="speed">500</span> milliseconds per move
+				</div>
+			</fieldset>
+			<fieldset>
+				<legend>Next Piece:</legend>
+				<div id="nextpiece">
+					<canvas id="preview" height="80" width="80"></canvas>
+				</div>
+			</fieldset>
+			<div id="instruction">
+				<fieldset>
+					<legend>Instruction:</legend>
+					rotation: UP key<br/>
+					left: LEFT key<br/>
+					right: RIGHT key<br/>
+					down: DOWN key<br/>
+				</fieldset>
+			</div>
+			<br/>
+			<div id="pause">
+				<input type="button" onclick="tetris.pausegame()" value="Pause Game" id="pausebutton"/> |
+				<input type="button" onclick="tetris.restartgame()" value="Restart Game" id="restartgame"/>
+			</div>
+		</div>
+	</div>
+<script>
+var buffer = document.getElementById("canvas");
+var canvas = document.getElementById("visible-canvas");
+var preview = document.getElementById("preview");
+
+var gameScore = document.getElementById('score');
+var restartMe = document.getElementById('restartgame');
+var pauseMe = document.getElementById('pausebutton');
+var gameLevel = document.getElementById('level');
+var gameSpeed = document.getElementById('speed');
+var listScores = document.getElementById('listScores');
+
+var buffer_ctx = buffer.getContext("2d");
+var ctx = canvas.getContext("2d");
+var preview_ctx = preview.getContext("2d");
+ 
+var tetromino = new tetris.Tetromino();
+var nextTetromino = new tetris.Tetromino();
+
+tetris.restartgame();
+
+</script>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-22265295-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body>
+
+</html>
