@@ -24,3 +24,8 @@ aside {
 	width: 225px;
 	float: left;
 }
+
+.smallSpace {
+	height: 10px;
+	width: auto;
+}

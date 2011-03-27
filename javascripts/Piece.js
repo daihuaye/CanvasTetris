@@ -49,7 +49,7 @@ tetris.Piece.rotation = function(ctx, buffer, buffer_ctx, tetromino) {
 	
 	tempTetromino.rotation = (tempTetromino.rotation + 1) % 4;
 	
-	if (tetris.Board.checkMove(tempTetromino, buffer_ctx)) {
+	if (tetris.Board.checkMove(tempTetromino)) {
 		tetris.Piece.copy(tempTetromino, tetromino);
 	};
 	tetris.Piece.drawTetromino(ctx, buffer, buffer_ctx, tetromino, "black");
@@ -63,9 +63,22 @@ tetris.Piece.changMove = function(ctx, buffer, buffer_ctx, tetromino, dx, dy) {
 	tempTetromino.x += dx;
 	tempTetromino.y += dy;
 
-	if (tetris.Board.checkMove(tempTetromino, buffer_ctx)) {
+	if (tetris.Board.checkMove(tempTetromino)) {
 		tetris.Piece.copy(tempTetromino, tetromino);
 	};		
+	tetris.Piece.drawTetromino(ctx, buffer, buffer_ctx, tetromino, "black");
+}
+
+tetris.Piece.dropDown = function(ctx, buffer, buffer_ctx, tetromino) {
+	var tempTetromino = new tetris.Tetromino();
+	tetris.Piece.copy(tetromino, tempTetromino);
+
+	tetris.Piece.drawTetromino(ctx, buffer, buffer_ctx, tetromino, "white");
+	tempTetromino.y += 20;
+	while(tetris.Board.checkMove(tempTetromino)) {
+		tetris.Piece.copy(tempTetromino, tetromino);
+		tempTetromino.y += 20;
+	};
 	tetris.Piece.drawTetromino(ctx, buffer, buffer_ctx, tetromino, "black");
 }
 
@@ -94,7 +107,7 @@ tetris.Piece.move = function(ctx, buffer, buffer_ctx, tetromino) {
 	
 	tetris.Board.key();
 	
-	if(tetris.Board.checkMove(tempTetromino, buffer_ctx)) {
+	if(tetris.Board.checkMove(tempTetromino)) {
 		tetris.Piece.drawTetromino(ctx, buffer, buffer_ctx, tetromino, "white");
 		tetris.Piece.copy(tempTetromino, tetromino);
 		tetris.Piece.drawTetromino(ctx, buffer, buffer_ctx, tetromino, "black");

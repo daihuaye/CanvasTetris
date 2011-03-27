@@ -11,9 +11,9 @@ tetris.Board.isBlocked = function(x, y) {
 	}
 }
 
-tetris.Board.checkMove = function(tetromino, buffer_ctx) {
+tetris.Board.checkMove = function(tetromino) {
 	var pos, i, isValid, x, y;
-	var buffer_pixel, buffer_data;
+	
 	for(i = 0; i < 4; i++) {
 		pos = tetris.Piece.PATTERNS[tetromino.pattern][tetromino.rotation][i];
 		x = pos[0] / 20 + tetromino.x / 20; // check
@@ -166,6 +166,12 @@ tetris.Board.key = function() {
 				tetris.Piece.changMove(ctx, buffer, buffer_ctx, tetromino, 0, 20);
 	      break; 
 
+			// space
+			case 32:
+				// drop down when pressing space bar
+				// setTimeout("tetris.Piece.dropDown(ctx, buffer, buffer_ctx, tetromino)", 10);
+				tetris.Piece.dropDown(ctx, buffer, buffer_ctx, tetromino);
+				break;
 	    default: 
 	      break; 
 	  }; 

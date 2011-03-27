@@ -32,6 +32,8 @@
 					<li>0</li>
 				</ol>
 			</fieldset>
+			<div class="smallSpace">
+			</div>
 			<fieldset id="contact">
 				<legend>Contact:</legend>
 				<div id="creator">
@@ -55,25 +57,31 @@
 				</div>
 				<div id="speed_container">
 					Speed:
-					<span id="speed">500</span> milliseconds per move
+					<span id="speed">500</span> milliseconds/move
 				</div>
 			</fieldset>
+			<div class="smallSpace">
+			</div>
 			<fieldset>
 				<legend>Next Piece:</legend>
 				<div id="nextpiece">
 					<canvas id="preview" height="80" width="80"></canvas>
 				</div>
 			</fieldset>
+			<div class="smallSpace">
+			</div>
 			<div id="instruction">
 				<fieldset>
 					<legend>Instruction:</legend>
-					rotation: UP key<br/>
-					left: LEFT key<br/>
-					right: RIGHT key<br/>
-					down: DOWN key<br/>
+					Rotation: Up key<br/>
+					Left: Left key<br/>
+					Right: Right key<br/>
+					Down: Down key<br/>
+					Fall: Space key
 				</fieldset>
 			</div>
-			<br/>
+			<div class="smallSpace">
+			</div>
 			<div id="pause">
 				<input type="button" onclick="tetris.pausegame()" value="Pause Game" id="pausebutton"/> |
 				<input type="button" onclick="tetris.restartgame()" value="Restart Game" id="restartgame"/>
