@@ -4,11 +4,14 @@ tetris.Board.WIDTH = 10;
 tetris.Board.HEIGHT = 20;
 
 tetris.Board.isBlocked = function(x, y) {
-	if(x < 0  || x >= tetris.Board.WIDTH || y < 0 || y >= tetris.Board.HEIGHT || tetris.blocks[y*tetris.Board.WIDTH+x] != undefined) {
-		return true;
-	} else {
+	// if(x < 0  || x >= tetris.Board.WIDTH || y < 0 || y >= tetris.Board.HEIGHT || tetris.blocks[y*tetris.Board.WIDTH+x].isBlock) {
+	if(x < 0  || x >= tetris.Board.WIDTH || y < 0 || y >= tetris.Board.HEIGHT) {
+			return true;
+	} else if(tetris.blocks[y*tetris.Board.WIDTH+x]) {
+			if(tetris.blocks[y*tetris.Board.WIDTH+x].isBlock)
+				return true;
+	} else
 		return false;
-	}
 }
 
 tetris.Board.checkMove = function(tetromino) {
@@ -39,9 +42,10 @@ tetris.Board.clearFilledRows = function(ctx, buffer, buffer_ctx, tetromino) {
 	var fillRows = 0;
 	for(row = 20; row >=0; ) {
 		for(col = 0; col < 10; ++col) {
-			if(!tetris.blocks[row*tetris.Board.WIDTH+col]) {
-				break;
-			};
+			// if(!tetris.blocks[row*tetris.Board.WIDTH+col]) {
+			if(tetris.blocks[row*tetris.Board.WIDTH+col])
+				if(!(tetris.blocks[row*tetris.Board.WIDTH+col].isBlock))
+					break;
 		};
 		if(col == 10) {
 			tetris.Score.score += tetris.Level.level * [40,100,300,1200][fillRows];

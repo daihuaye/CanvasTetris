@@ -13,7 +13,9 @@ tetris.intervalInt = { i: 0 };
 tetris.keyCode = { key: 0 };
 tetris.Score = { score: 0, allScores: [] };
 tetris.Level = { level : 1 };
+// tetris.blocks = [];
 tetris.blocks = [];
+tetris.blockInfo = function() { this.isBlock = false; this.color=0; };
 tetris.isEnd = { end : false };
 // tetris.rowsCleared = { num : 0, completedRows: [] };
 tetris.rowsCleared = { num : 0 };
@@ -68,7 +70,7 @@ tetris.restartgame = function() {
 	};
 	
 	// show the next piece
-	tetris.Board.showNextPiece()
+	tetris.Board.showNextPiece();
 	
 	// update the speed tag
 	gameSpeed.innerHTML = tetris.gameSpeed.num;
@@ -89,6 +91,9 @@ tetris.restartgame = function() {
 	// var tetromino = new tetris.Tetromino();
 	tetris.Piece.startTetromino(tetromino);
 	
+	// copy the here
+	// tetris.Piece.copy(tetromino, previewTetromino);
+
 	// start the game
 
 	// tetris.Piece.drawTetromino(ctx, buffer, buffer_ctx, tetromino, "black");
