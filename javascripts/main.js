@@ -13,9 +13,8 @@ tetris.intervalInt = { i: 0 };
 tetris.keyCode = { key: 0 };
 tetris.Score = { score: 0, allScores: [] };
 tetris.Level = { level : 1 };
-// tetris.blocks = [];
 tetris.blocks = [];
-tetris.blockInfo = function() { this.isBlock = false; this.color=0; };
+tetris.blockInfo = function() { this.isBlocked = false; this.color=0 };
 tetris.isEnd = { end : false };
 // tetris.rowsCleared = { num : 0, completedRows: [] };
 tetris.rowsCleared = { num : 0 };
@@ -29,6 +28,19 @@ tetris.Tetromino = function() {
 //	this.location = 0;
 	this.x = 0;
 	this.y = 0;
+}
+
+tetris.resetblocks = function() {
+	var row, col;
+	// for(row = 0; row <= tetris.Board.HEIGHT; row++) {
+	for(row = 0; row <= tetris.Board.HEIGHT; row++) {
+		for(col = 0; col <= tetris.Board.WIDTH; col++) {
+			if(tetris.blocks[row*tetris.Board.WIDTH+col] == undefined)
+				// buffer_ctx.fillRect(col*20, row*20, 20, 20);
+				var blockInfo = new tetris.blockInfo();
+				tetris.blocks[row*tetris.Board.WIDTH+col] = blockInfo;
+		};
+	};
 }
 
 tetris.pausegame = function() {
@@ -61,6 +73,9 @@ tetris.restartgame = function() {
 	// console.log(tetris.Score.allScores);
 	tetris.blocks = [];
 	
+	// reset the blocks
+	tetris.resetblocks();
+	
 	// retriece the data from the local storage
 	tetris.localStorage.retrieve();
 	
@@ -69,8 +84,7 @@ tetris.restartgame = function() {
 		tetris.localStorage.list();
 	};
 	
-	// show the next piece
-	tetris.Board.showNextPiece();
+	// tetris.Board.showNextPiece();
 	
 	// update the speed tag
 	gameSpeed.innerHTML = tetris.gameSpeed.num;
@@ -91,13 +105,13 @@ tetris.restartgame = function() {
 	// var tetromino = new tetris.Tetromino();
 	tetris.Piece.startTetromino(tetromino);
 	
-	// copy the here
-	// tetris.Piece.copy(tetromino, previewTetromino);
-
 	// start the game
 
 	// tetris.Piece.drawTetromino(ctx, buffer, buffer_ctx, tetromino, "black");
 	tetris.Board.drawBoard(ctx, buffer, buffer_ctx);
+	
+	// show the next piece
+	tetris.Board.showNextPiece();
 	
 	clearInterval(tetris.intervalInt.i);
 	tetris.intervalInt.i = setInterval("tetris.Piece.move(ctx, buffer, buffer_ctx, tetromino)", tetris.gameSpeed.num);

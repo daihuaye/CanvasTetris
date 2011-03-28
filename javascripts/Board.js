@@ -4,14 +4,11 @@ tetris.Board.WIDTH = 10;
 tetris.Board.HEIGHT = 20;
 
 tetris.Board.isBlocked = function(x, y) {
-	// if(x < 0  || x >= tetris.Board.WIDTH || y < 0 || y >= tetris.Board.HEIGHT || tetris.blocks[y*tetris.Board.WIDTH+x].isBlock) {
-	if(x < 0  || x >= tetris.Board.WIDTH || y < 0 || y >= tetris.Board.HEIGHT) {
-			return true;
-	} else if(tetris.blocks[y*tetris.Board.WIDTH+x]) {
-			if(tetris.blocks[y*tetris.Board.WIDTH+x].isBlock)
-				return true;
-	} else
+	if(x < 0  || x >= tetris.Board.WIDTH || y < 0 || y >= tetris.Board.HEIGHT || tetris.blocks[y*tetris.Board.WIDTH+x].isBlocked) {
+		return true;
+	} else {
 		return false;
+	}
 }
 
 tetris.Board.checkMove = function(tetromino) {
@@ -42,18 +39,24 @@ tetris.Board.clearFilledRows = function(ctx, buffer, buffer_ctx, tetromino) {
 	var fillRows = 0;
 	for(row = 20; row >=0; ) {
 		for(col = 0; col < 10; ++col) {
-			// if(!tetris.blocks[row*tetris.Board.WIDTH+col]) {
-			if(tetris.blocks[row*tetris.Board.WIDTH+col])
-				if(!(tetris.blocks[row*tetris.Board.WIDTH+col].isBlock))
-					break;
+			if(!(tetris.blocks[row*tetris.Board.WIDTH+col].isBlocked)) {
+				break;
+			};
 		};
 		if(col == 10) {
 			tetris.Score.score += tetris.Level.level * [40,100,300,1200][fillRows];
 			fillRows++;
 			for(row2 = row - 1; row2 >= 0; row2--) {
 				for(col = 0; col < 10; ++col) {
-					tetris.blocks[(row2+1)*tetris.Board.WIDTH+col] = tetris.blocks[row2*tetris.Board.WIDTH+col];
+					// console.log("copy from the new low");
+					tetris.blocks[(row2+1)*tetris.Board.WIDTH+col].isBlocked = tetris.blocks[row2*tetris.Board.WIDTH+col].isBlocked;
+					tetris.blocks[(row2+1)*tetris.Board.WIDTH+col].color = tetris.blocks[row2*tetris.Board.WIDTH+col].color;
 				};
+			};
+			// reset the top row
+			// lastRow = 0;
+			for(col = 0; col <= tetris.Board.WIDTH; col++) {
+				tetris.blocks[col].isBlocked = false;
 			};
 			
 			tetris.Piece.redraw(ctx, buffer, buffer_ctx);
@@ -72,26 +75,32 @@ tetris.Board.clearFilledRows = function(ctx, buffer, buffer_ctx, tetromino) {
 tetris.Board.showNextPiece = function() {
 	var x, y;
 	var pos, i;
+	var aryColor = [];
 	preview_ctx.clearRect(0,0,80,80);
 	
 	tetris.Piece.startTetromino(nextTetromino);
+	// console.log(nextTetromino);
 	x = nextTetromino.x;
 	y = nextTetromino.y;
 	nextTetromino.x = 0;
 	nextTetromino.y = 0;
-
+	// blockImg.src = "images/blocks.png";
 	preview_ctx.fillStyle="black";
 	for(i = 0; i < 4; i++) {
 		pos = tetris.Piece.PATTERNS[nextTetromino.pattern][nextTetromino.rotation][i];
 		preview_ctx.fillRect(pos[0] + nextTetromino.x, pos[1] + nextTetromino.y, 20, 20);
-	}
-	
-	// preview_ctx.beginPath();
-	// preview_ctx.strokeStyle="red";
-	// preview_ctx.strokeRect(0,0,80,80);
-	// preview_ctx.closePath();
-	
-	// buffer_ctx.clearRect(0, 0, 80, 80);
+		// if(color == "black") {
+		// console.log(pos[0] + nextTetromino.x);
+		// aryColor = tetris.Piece.COLORS[nextTetromino.pattern];
+		// console.log(aryColor);
+		// console.log(tetris.Piece.COLORS[nextTetromino.pattern][0]);
+		// console.log(tetris.Piece.COLORS[nextTetromino.pattern][1]);
+		// console.log(pos[0] + nextTetromino.x);
+		// console.log(pos[1] + nextTetromino.y);
+		preview_ctx.drawImage(blockImg, tetris.Piece.COLORS[nextTetromino.pattern][0], tetris.Piece.COLORS[nextTetromino.pattern][1], 20, 20, pos[0] + nextTetromino.x, pos[1] + nextTetromino.y, 20, 20);
+		// preview_ctx.drawImage(blockImg, tetris.Piece.COLORS[nextTetromino.pattern][0], tetris.Piece.COLORS[nextTetromino.pattern][1], 20, 20);
+	};
+	// preview_ctx.drawImage(previewTemp, 0, 0);
 	nextTetromino.x = x;
 	nextTetromino.y = y;
 }
@@ -106,6 +115,8 @@ tetris.Board.isEnd = function() {
 			tetris.localStorage.store(); // store the score
 			tetris.localStorage.list(); // list the scroes in the aside
 			clearInterval(tetris.intervalInt.i);
+			// console.log(col);
+			// console.log("end is true");
 			tetris.isEnd.end = true;
 		};
 	};

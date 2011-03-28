@@ -7,13 +7,15 @@
 
 <link rel="stylesheet" href="stylesheets/style.css" type="text/css" media="screen"charset="utf-8">
 <script src="javascripts/base.js"></script>
-<script src="javascripts/Board.js"></script>
-<script src="javascripts/Piece.js"></script>
 <script src="javascripts/localStorage.js"></script>
+<script src="javascripts/Piece.js"></script>
+<script src="javascripts/Board.js"></script>
 <script src="javascripts/main.js"></script>
+<script src="javascripts/browserDetect.js"></script>
 </head>
 <body>
 	<div id="main">
+		<img id="blockimg" src="images/blocks.png"/>
 		<canvas id="canvas" height="400", width="230"></canvas>
 		<canvas id="visible-canvas" height="400" width="230" style="float:left;" onkeydown="tetris.Keyborad.onKeyDown(event);"></canvas>
 		<aside>
@@ -66,6 +68,7 @@
 				<legend>Next Piece:</legend>
 				<div id="nextpiece">
 					<canvas id="preview" height="80" width="80"></canvas>
+					<!-- <canvas id="previewTemp" height="80" width="80"></canvas> -->
 				</div>
 			</fieldset>
 			<div class="smallSpace">
@@ -92,6 +95,7 @@
 var buffer = document.getElementById("canvas");
 var canvas = document.getElementById("visible-canvas");
 var preview = document.getElementById("preview");
+// var previewTemp = document.getElementById("previewTemp");
 
 var gameScore = document.getElementById('score');
 var restartMe = document.getElementById('restartgame');
@@ -100,21 +104,30 @@ var gameLevel = document.getElementById('level');
 var gameSpeed = document.getElementById('speed');
 var listScores = document.getElementById('listScores');
 
+var blockImg = document.getElementById('blockimg');
+// console.log(blockImage);
+
 var buffer_ctx = buffer.getContext("2d");
 var ctx = canvas.getContext("2d");
+
 var preview_ctx = preview.getContext("2d");
- 
+// var previewTemp_ctx = previewTemp.getContext("2d");
 var tetromino = new tetris.Tetromino();
 var nextTetromino = new tetris.Tetromino();
 
-var blockImg = new Image();
+// var blockImg = new Image();
+BrowserDetect.init();
+// ctx.drawImage(blockImg, 0, 0);
 
-blockImg.src = "images/blocks.png";
+// setTimeout("tetris.restartgame()", 1000);
+// console.log(BrowserDetect.browser);
+blockImg.onload = function() {
+	tetris.restartgame();
+};
 
-// ctx.drawImage(blockImg, 40, 0, 20, 20, 0, 0, 20, 20);
-// var previewTetromino = new tetris.Tetromino();
+// blockImg.src = "images/blocks.png";
 
-tetris.restartgame();
+// console.log(blockImg);
 
 </script>
 
