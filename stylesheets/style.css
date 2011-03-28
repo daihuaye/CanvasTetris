@@ -7,6 +7,10 @@
 	display: none;
 }
 
+/*#previewTemp {
+	display: none;
+}
+*/
 #main {
 	width: 660px;
 	height: 400px;
