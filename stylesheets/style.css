@@ -2,15 +2,21 @@
 #score_container {
 	display: inline;
 }
-
 #canvas {
 	display: none;
+}
+#visible-canvas {
+	border: 1.5px solid red;
 }
 
 #blockimg {
 	display: none;
 }
 
+#projection {
+	z-index: -1;
+	display: none;
+}
 /*#previewTemp {
 	display: none;
 }
@@ -31,9 +37,10 @@ aside {
 	height: 400px;
 	width: 225px;
 	float: left;
+	padding-left: 18px;
 }
 
 .smallSpace {
-	height: 10px;
+	height: 5px;
 	width: auto;
 }

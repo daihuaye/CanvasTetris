@@ -1,5 +1,9 @@
 This is a javascript base tetris game. open the index.html in your browser and play. You are free to modify the code.
 
+New Feature in 1.1.1 (update on March 31th 2011)
+#1, projection for block.
+#2, add two short-cut keys, when you press "P" key to pause the game, and "R" key to restart the game.
+
 This license is for this example game only. 
 
 ===

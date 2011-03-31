@@ -6,18 +6,24 @@
 <meta name="keywords" content="game, games, puzzle, falling blocks, high score, tetris">
 
 <link rel="stylesheet" href="stylesheets/style.css" type="text/css" media="screen"charset="utf-8">
-<script src="javascripts/base.js"></script>
+<script src="javascripts/base_min.js"></script>
+<script src="javascripts/localStorage_min.js"></script>
+<script src="javascripts/Piece_min.js"></script>
+<script src="javascripts/Board_min.js"></script>
+<script src="javascripts/main_min.js"></script>
+<!-- <script src="javascripts/base.js"></script>
 <script src="javascripts/localStorage.js"></script>
 <script src="javascripts/Piece.js"></script>
 <script src="javascripts/Board.js"></script>
-<script src="javascripts/main.js"></script>
-<script src="javascripts/browserDetect.js"></script>
+<script src="javascripts/main.js"></script> -->
+<!-- <script src="javascripts/browserDetect.js"></script> -->
 </head>
 <body>
 	<div id="main">
 		<img id="blockimg" src="images/blocks.png"/>
-		<canvas id="canvas" height="400", width="230"></canvas>
-		<canvas id="visible-canvas" height="400" width="230" style="float:left;" onkeydown="tetris.Keyborad.onKeyDown(event);"></canvas>
+		<img id="projection" src="images/projection.png" />
+		<canvas id="canvas" height="400", width="200"></canvas>
+		<canvas id="visible-canvas" height="400" width="200" style="float:left;" onkeydown="tetris.Keyborad.onKeyDown(event);"></canvas>
 		<aside>
 			<fieldset>
 				<legend>Top 10 best recording:</legend>
@@ -59,7 +65,7 @@
 				</div>
 				<div id="speed_container">
 					Speed:
-					<span id="speed">500</span> milliseconds/move
+					<span id="speed">800</span> milliseconds/move
 				</div>
 			</fieldset>
 			<div class="smallSpace">
@@ -76,11 +82,13 @@
 			<div id="instruction">
 				<fieldset>
 					<legend>Instruction:</legend>
-					Rotation: Up key<br/>
-					Left: Left key<br/>
-					Right: Right key<br/>
-					Down: Down key<br/>
-					Fall: Space key
+					Rotation: <b>Up</b> key<br/>
+					Left: <b>Left</b> key<br/>
+					Right: <b>Right</b> key<br/>
+					Down: <b>Down</b> key<br/>
+					Fall: <b>Space</b> key<br/>
+					Pause: <b>P</b> key<br/>
+					Restart: <b>R</b> key<br/>
 				</fieldset>
 			</div>
 			<div class="smallSpace">
@@ -105,7 +113,7 @@ var gameSpeed = document.getElementById('speed');
 var listScores = document.getElementById('listScores');
 
 var blockImg = document.getElementById('blockimg');
-// console.log(blockImage);
+var projectionImg = document.getElementById('projection');
 
 var buffer_ctx = buffer.getContext("2d");
 var ctx = canvas.getContext("2d");
@@ -114,9 +122,10 @@ var preview_ctx = preview.getContext("2d");
 // var previewTemp_ctx = previewTemp.getContext("2d");
 var tetromino = new tetris.Tetromino();
 var nextTetromino = new tetris.Tetromino();
+var projection = new tetris.Tetromino();
 
 // var blockImg = new Image();
-BrowserDetect.init();
+// BrowserDetect.init();
 // ctx.drawImage(blockImg, 0, 0);
 
 // setTimeout("tetris.restartgame()", 1000);
@@ -124,10 +133,6 @@ BrowserDetect.init();
 blockImg.onload = function() {
 	tetris.restartgame();
 };
-
-// blockImg.src = "images/blocks.png";
-
-// console.log(blockImg);
 
 </script>
 

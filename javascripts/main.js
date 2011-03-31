@@ -18,7 +18,8 @@ tetris.blockInfo = function() { this.isBlocked = false; this.color=0 };
 tetris.isEnd = { end : false };
 // tetris.rowsCleared = { num : 0, completedRows: [] };
 tetris.rowsCleared = { num : 0 };
-tetris.gameSpeed = { num : 500 };
+tetris.gameSpeed = { num : 800 };
+tetris.cannotMove = { bool: false };
 /**
  * @enum
  */
@@ -28,7 +29,7 @@ tetris.Tetromino = function() {
 //	this.location = 0;
 	this.x = 0;
 	this.y = 0;
-}
+};
 
 tetris.resetblocks = function() {
 	var row, col;
@@ -41,13 +42,32 @@ tetris.resetblocks = function() {
 				tetris.blocks[row*tetris.Board.WIDTH+col] = blockInfo;
 		};
 	};
-}
+};
 
 tetris.pausegame = function() {
 	if (pauseMe.value == "Pause Game") {
 		pauseMe.value = "Start Game";
 		
-		document.onkeydown = function(event) {};
+		document.onkeydown = function(event) {
+			var keyCode; 
+
+		  if(event == null)
+		  {
+		    keyCode = window.event.keyCode; 
+		  } else {
+		    keyCode = event.keyCode; 
+		  };
+			// console.log(keyCode);
+		  if(keyCode == 80) {
+				pauseMe.value = "Pause Game";
+				tetris.Board.isEnd();
+				if (tetris.isEnd.end == false) {
+					tetris.intervalInt.i = setInterval("tetris.Piece.move(ctx, buffer, buffer_ctx, tetromino)", tetris.gameSpeed.num);
+				};
+			} else if(keyCode == 82) {
+				tetris.restartgame();
+			};
+		};
 		
 		clearInterval(tetris.intervalInt.i);
 	} else {
@@ -57,7 +77,7 @@ tetris.pausegame = function() {
 			tetris.intervalInt.i = setInterval("tetris.Piece.move(ctx, buffer, buffer_ctx, tetromino)", tetris.gameSpeed.num);
 		};
 	};
-}
+};
 
 tetris.restartgame = function() {
 	// setup the default value
@@ -65,9 +85,10 @@ tetris.restartgame = function() {
 	tetris.Score.score = 0;
 	tetris.Level.level = 1;
 	tetris.rowsCleared.num = 0;
-	tetris.gameSpeed.num = 500;
+	tetris.gameSpeed.num = 800;
 	tetris.Score.allScores = [];
 	tetris.isEnd.end = false;
+	tetris.cannotMove.bool = false;
 	// tetris.Score.allScores = [0];
 	// tetris.rowsCleared.completedRows = [0];
 	// console.log(tetris.Score.allScores);
@@ -98,6 +119,9 @@ tetris.restartgame = function() {
 	// pauseMe become 
 	pauseMe.value = "Pause Game";
 	
+	// clear the projection
+	tetris.Piece.drawProjection(ctx, buffer, buffer_ctx, projection, "white");
+
 	// redraw the game
 	tetris.Piece.redraw(ctx, buffer, buffer_ctx);
 	
@@ -105,15 +129,17 @@ tetris.restartgame = function() {
 	// var tetromino = new tetris.Tetromino();
 	tetris.Piece.startTetromino(tetromino);
 	
+	// copy the tetromino to projection
+	tetris.Piece.copy(tetromino, projection);
 	// start the game
 
 	// tetris.Piece.drawTetromino(ctx, buffer, buffer_ctx, tetromino, "black");
-	tetris.Board.drawBoard(ctx, buffer, buffer_ctx);
+	// tetris.Board.drawBoard(ctx, buffer, buffer_ctx);
 	
 	// show the next piece
 	tetris.Board.showNextPiece();
 	
 	clearInterval(tetris.intervalInt.i);
 	tetris.intervalInt.i = setInterval("tetris.Piece.move(ctx, buffer, buffer_ctx, tetromino)", tetris.gameSpeed.num);
-}
+};
 

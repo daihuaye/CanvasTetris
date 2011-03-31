@@ -2,7 +2,7 @@ goog.provide('tetris.localStorage');
 
 tetris.localStorage.store = function() {
 	localStorage.setItem('scores', tetris.Score.allScores);
-}
+};
 
 tetris.localStorage.retrieve = function() {
 	var numAry, str, i;
@@ -15,7 +15,7 @@ tetris.localStorage.retrieve = function() {
 	} else {
 		tetris.Score.allScores = [];
 	};
-}
+};
 
 tetris.localStorage.insertSortScores = function() {
 	var temp, i, j;
@@ -28,7 +28,7 @@ tetris.localStorage.insertSortScores = function() {
 		};
 		tetris.Score.allScores[j] = temp;
 	};		
-}
+};
 
 tetris.localStorage.list = function () {
 	tetris.localStorage.insertSortScores();
@@ -39,4 +39,4 @@ tetris.localStorage.list = function () {
 			listScores.children[i].innerHTML = tetris.Score.allScores[i];
 		};
 	};
-}
+};
