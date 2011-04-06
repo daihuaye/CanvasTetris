@@ -6,23 +6,23 @@
 <meta name="keywords" content="game, games, puzzle, falling blocks, high score, tetris">
 
 <link rel="stylesheet" href="stylesheets/style.css" type="text/css" media="screen"charset="utf-8">
-<script src="javascripts/base_min.js"></script>
+<!-- <script src="javascripts/base_min.js"></script>
 <script src="javascripts/localStorage_min.js"></script>
 <script src="javascripts/Piece_min.js"></script>
 <script src="javascripts/Board_min.js"></script>
-<script src="javascripts/main_min.js"></script>
-<!-- <script src="javascripts/base.js"></script>
+<script src="javascripts/main_min.js"></script> -->
+<script src="javascripts/base.js"></script>
 <script src="javascripts/localStorage.js"></script>
 <script src="javascripts/Piece.js"></script>
 <script src="javascripts/Board.js"></script>
-<script src="javascripts/main.js"></script> -->
+<script src="javascripts/main.js"></script>
 <!-- <script src="javascripts/browserDetect.js"></script> -->
 </head>
 <body>
 	<div id="main">
 		<img id="blockimg" src="images/blocks.png"/>
 		<img id="projection" src="images/projection.png" />
-		<canvas id="canvas" height="400", width="200"></canvas>
+		<canvas id="canvas" height="440", width="200"></canvas>
 		<canvas id="visible-canvas" height="400" width="200" style="float:left;" onkeydown="tetris.Keyborad.onKeyDown(event);"></canvas>
 		<aside>
 			<fieldset>
@@ -99,6 +99,8 @@
 			</div>
 		</div>
 	</div>
+	<div id="gameover"></div>
+	<div id="pausescene"></div>
 <script>
 var buffer = document.getElementById("canvas");
 var canvas = document.getElementById("visible-canvas");
@@ -114,6 +116,11 @@ var listScores = document.getElementById('listScores');
 
 var blockImg = document.getElementById('blockimg');
 var projectionImg = document.getElementById('projection');
+
+// Get the game over element
+var gameOver = document.getElementById('gameover');
+// pause scene
+var pauseScene = document.getElementById('pausescene');
 
 var buffer_ctx = buffer.getContext("2d");
 var ctx = canvas.getContext("2d");

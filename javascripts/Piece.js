@@ -38,7 +38,7 @@ tetris.Piece.drawTetromino = function(ctx, buffer, buffer_ctx, tetromino, color)
 		} else
 			buffer_ctx.fillRect(pos[0] + tetromino.x, pos[1] + tetromino.y, 20, 20);
 	}
-	ctx.drawImage(buffer, 0, 0);
+	ctx.drawImage(buffer, 0, 40, 200, 400, 0, 0, 200, 400);
 };
 
 tetris.Piece.drawProjection = function(ctx, buffer, buffer_ctx, projection, color) {
@@ -51,7 +51,7 @@ tetris.Piece.drawProjection = function(ctx, buffer, buffer_ctx, projection, colo
 		} else
 			buffer_ctx.fillRect(pos[0] + projection.x, pos[1] + projection.y, 20, 20);
 	}
-	ctx.drawImage(buffer, 0, 0);
+	ctx.drawImage(buffer, 0, 40, 200, 400, 0, 0, 200, 400);
 };
 
 // tetris.Piece.clearProjection = function() {
@@ -66,7 +66,7 @@ tetris.Piece.drawProjection = function(ctx, buffer, buffer_ctx, projection, colo
 tetris.Piece.redraw = function(ctx, buffer, buffer_ctx) {
 	var row, col;
 	var blockColor;
-	buffer_ctx.clearRect(0,0, 200, 400);
+	buffer_ctx.clearRect(0,0, 200, 440);
 	ctx.clearRect(0,0,200,400);
 	// buffer_ctx.fillStyle="black";
 	for(row = 0; row < tetris.Board.HEIGHT; row++) {
@@ -79,7 +79,7 @@ tetris.Piece.redraw = function(ctx, buffer, buffer_ctx) {
 		};
 	};
 	
-	ctx.drawImage(buffer, 0, 0);
+	ctx.drawImage(buffer, 0, 40, 200, 400, 0, 0, 200, 400);
 	// tetris.Board.drawBoard(ctx, buffer, buffer_ctx);
 };
 
@@ -108,9 +108,9 @@ tetris.Piece.rotation = function(ctx, buffer, buffer_ctx, tetromino) {
 	// locate the projection
 	tetris.Piece.findProjection();
 	
-	tetris.Piece.drawTetromino(ctx, buffer, buffer_ctx, tetromino, "black");
 	// projection
-	tetris.Piece.drawProjection(ctx, buffer, buffer_ctx, projection, "black");
+	tetris.Piece.drawProjection(ctx, buffer, buffer_ctx, projection, "black");	
+	tetris.Piece.drawTetromino(ctx, buffer, buffer_ctx, tetromino, "black");
 };
 
 tetris.Piece.changMove = function(ctx, buffer, buffer_ctx, tetromino, dx, dy) {
@@ -129,16 +129,17 @@ tetris.Piece.changMove = function(ctx, buffer, buffer_ctx, tetromino, dx, dy) {
 	};	
 	// locate the projection
 	tetris.Piece.findProjection();
-	
-	tetris.Piece.drawTetromino(ctx, buffer, buffer_ctx, tetromino, "black");
+
 	// projection
 	tetris.Piece.drawProjection(ctx, buffer, buffer_ctx, projection, "black");
+		
+	tetris.Piece.drawTetromino(ctx, buffer, buffer_ctx, tetromino, "black");
 	// tetris.Board.showNextPiece();
 };
 
 tetris.Piece.dropDown = function(ctx, buffer, buffer_ctx, tetromino) {
 	tetris.cannotMove.bool = true;
-
+	// console.log(tetris.cannotMove.bool);
 	var tempTetromino = new tetris.Tetromino();
 	
 	tetris.Piece.copy(tetromino, tempTetromino);
@@ -186,13 +187,12 @@ tetris.Piece.move = function(ctx, buffer, buffer_ctx, tetromino) {
 	// } else {
 	// 	testPreview = 3;
 	// };
+	// console.log(tetris.cannotMove.bool);
 	if(tetris.Board.checkMove(tempTetromino) || tetris.cannotMove == false) {
 		tetris.Piece.drawTetromino(ctx, buffer, buffer_ctx, tetromino, "white");
 		tetris.Piece.copy(tempTetromino, tetromino);
 		tetris.Piece.drawTetromino(ctx, buffer, buffer_ctx, tetromino, "black");
 	} else {
-		// start new block, then change cannotMove to true
-		tetris.cannotMove.bool = false;
 		
 		// delete the projection
 		// tetris.Piece.drawProjection(ctx, buffer, buffer_ctx, projection, "white");
@@ -221,5 +221,7 @@ tetris.Piece.move = function(ctx, buffer, buffer_ctx, tetromino) {
 			tetris.Piece.drawTetromino(ctx, buffer, buffer_ctx, tetromino, "black");			
 		};
 	};
+	// start new block, then change cannotMove to true
+	tetris.cannotMove.bool = false;
 	// tetris.Board.drawBoard(ctx, buffer, buffer_ctx);
 };

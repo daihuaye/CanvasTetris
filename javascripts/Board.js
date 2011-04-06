@@ -1,7 +1,7 @@
 goog.provide('tetris.Board');
 
 tetris.Board.WIDTH = 10;
-tetris.Board.HEIGHT = 20;
+tetris.Board.HEIGHT = 22; // add 
 
 tetris.Board.isBlocked = function(x, y) {
 	if(x < 0  || x >= tetris.Board.WIDTH || y < 0 || y >= tetris.Board.HEIGHT || tetris.blocks[y*tetris.Board.WIDTH+x].isBlocked) {
@@ -37,7 +37,7 @@ tetris.Board.clearFilledRows = function(ctx, buffer, buffer_ctx, tetromino) {
 	var row, col, row2, nextLevel;
 	nextLevel = 1;
 	var fillRows = 0;
-	for(row = 20; row >=0; ) {
+	for(row = 22; row >=0; ) {
 		for(col = 0; col < 10; ++col) {
 			if(!(tetris.blocks[row*tetris.Board.WIDTH+col].isBlocked)) {
 				break;
@@ -115,8 +115,21 @@ tetris.Board.isEnd = function() {
 			// tetris.rowsCleared.completedRows.push(tetris.rowsCleared.num);
 			tetris.localStorage.store(); // store the score
 			tetris.localStorage.list(); // list the scroes in the aside
-			// console.log(col);
-			// console.log("end is true");
+
+			gameOver.innerHTML = "Game Over";
+			document.onkeydown = function(event) {
+				var keyCode; 
+
+			  if(event == null)
+			  {
+			    keyCode = window.event.keyCode; 
+			  } else {
+			    keyCode = event.keyCode; 
+			  };
+				if(keyCode == 82) {
+					tetris.restartgame();
+				};
+			};
 			tetris.isEnd.end = true;
 		};
 	};
@@ -167,24 +180,28 @@ tetris.Board.key = function() {
 	    case 37:
 	      // action when pressing left key
 				// tetris.Piece.changMove = function(ctx, buffer, buffer_ctx, tetromino, dx, dy);
-				tetris.Piece.changMove(ctx, buffer, buffer_ctx, tetromino, -20, 0);
+				if(!tetris.cannotMove.bool)
+					tetris.Piece.changMove(ctx, buffer, buffer_ctx, tetromino, -20, 0);
 	      break;
 	    // up 
 	    case 38:
 	    // action when pressing up key
-				tetris.Piece.rotation(ctx, buffer, buffer_ctx, tetromino);
+				if(!tetris.cannotMove.bool)
+					tetris.Piece.rotation(ctx, buffer, buffer_ctx, tetromino);
 	      break; 
 
 	    // right 
 	    case 39:
 	    // action when pressing right key
-				tetris.Piece.changMove(ctx, buffer, buffer_ctx, tetromino, 20, 0);
+				if(!tetris.cannotMove.bool)
+					tetris.Piece.changMove(ctx, buffer, buffer_ctx, tetromino, 20, 0);
 	      break; 
 
 	    // down
 	    case 40:
 	    // action when pressing down key
-				tetris.Piece.changMove(ctx, buffer, buffer_ctx, tetromino, 0, 20);
+				if(!tetris.cannotMove.bool)
+					tetris.Piece.changMove(ctx, buffer, buffer_ctx, tetromino, 0, 20);
 	      break; 
 
 			// space

@@ -47,7 +47,7 @@ tetris.resetblocks = function() {
 tetris.pausegame = function() {
 	if (pauseMe.value == "Pause Game") {
 		pauseMe.value = "Start Game";
-		
+		pauseScene.innerHTML = "Pause";
 		document.onkeydown = function(event) {
 			var keyCode; 
 
@@ -64,6 +64,7 @@ tetris.pausegame = function() {
 				if (tetris.isEnd.end == false) {
 					tetris.intervalInt.i = setInterval("tetris.Piece.move(ctx, buffer, buffer_ctx, tetromino)", tetris.gameSpeed.num);
 				};
+				pauseScene.innerHTML = "";
 			} else if(keyCode == 82) {
 				tetris.restartgame();
 			};
@@ -76,6 +77,7 @@ tetris.pausegame = function() {
 		if (tetris.isEnd.end == false) {
 			tetris.intervalInt.i = setInterval("tetris.Piece.move(ctx, buffer, buffer_ctx, tetromino)", tetris.gameSpeed.num);
 		};
+		pauseScene.innerHTML = "";
 	};
 };
 
@@ -89,6 +91,8 @@ tetris.restartgame = function() {
 	tetris.Score.allScores = [];
 	tetris.isEnd.end = false;
 	tetris.cannotMove.bool = false;
+	gameOver.innerHTML = "";
+	pauseScene.innerHTML = "";
 	// tetris.Score.allScores = [0];
 	// tetris.rowsCleared.completedRows = [0];
 	// console.log(tetris.Score.allScores);

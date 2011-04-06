@@ -1,3 +1,18 @@
+@font-face {
+	font-family: Museo;
+	src: url("/font/Museo300-Regular.otf") format("opentype");
+}
+
+#gameover, #pausescene {
+	position: absolute;
+	top: 150px;
+	left: 112px;
+	font-family: "Museo";
+	font-size: 80px;
+	text-transform: uppercase;
+	color: #707070;
+	text-shadow: 5px 5px 0px #eee, 7px 7px 0px #707070;
+}
 
 #score_container {
 	display: inline;
